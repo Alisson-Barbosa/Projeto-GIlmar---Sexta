@@ -7,6 +7,15 @@ session_start();
   <meta charset="UTF-8">
   <title>Chat com Gemini</title>
   <link rel="stylesheet" href="Style.css">
+  <style>
+    body{
+      background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigwDDJrkecZHJjvy-atKn2pgC7Ho9Iz7jRnNVa7k9otr79FWwcGip9CWSFTdhuDl66m1tqF-fCD8IqxoUc9HvbbeOZf62REDRoH9quxmZSDwcMiTLtYb9k5_TlQcPnuPpHeAc5LfgV9gNw-O_bK1DItnYOPPsQuxI_MZhZjlRGHsm0dbQlKPi8YYC5qeM/w656-h437/rpgdungeon.png");
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+    
+  </style>
 </head>
 <body>
   <div class="container">
