@@ -8,20 +8,19 @@
 </head>
 <body>
   <div class="container">
-    <h2>Campanha Automática (Gemini)</h2>
+    <h2>Campanha Automática</h2>
 
     <div class="controls">
-      <button id="startBtn">Iniciar Campanha</button>
-      <button id="clearBtn">Limpar Conversa</button>
+      <button id="startBtn">Iniciar nova Campanha</button>
     </div>
 
     <div id="chat" class="chat">
-      <div class="notice">Nenhuma mensagem. Clique em "Iniciar Campanha" para começar.</div>
+      <div class="notice">Clique em "Iniciar nova Campanha" para começar.</div>
     </div>
 
     <div class="form">
-      <textarea id="input" rows="3" placeholder="Digite sua mensagem..."></textarea>
-      <button id="sendBtn">Enviar</button>
+      <textarea id="input" rows="3" placeholder="O que deseja fazer?"></textarea>
+      <button id="sendBtn">Realizar Ação</button>
     </div>
   </div>
 

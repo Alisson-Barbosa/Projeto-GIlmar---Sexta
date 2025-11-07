@@ -4,24 +4,65 @@ class GeminiClient {
     private string $apiKey;
     private string $endpoint;
 
+    // 🧙‍♂️ Prompt fixo (personalidade do Mestre)
+    private string $rpgPrompt = "
+Você é o Mestre de uma campanha de RPG de fantasia medieval.
+Narre de forma envolvente, com descrições curtas e misteriosas.
+Sempre apresente 2 a 3 escolhas para o grupo ao final de cada resposta.
+";
+
+    // 💾 Histórico da aventura
+    private array $history = [];
+
+    // 🌟 Introdução automática (quando o jogo começa)
+    private string $introMessage = "
+🌒 A noite cai sobre o vilarejo de Eldorim...
+Dentro da Taverna do Corvo Cinzento, viajantes de todo o reino se reúnem.
+Uma tempestade ruge lá fora. A porta se abre, e um mensageiro ensanguentado cai no chão, sussurrando:
+'...eles... acordaram nas ruínas do castelo... o Sol Negro retornou...'
+
+O taverneiro empalidece e tranca as janelas.
+O destino do grupo começa aqui.
+
+1️⃣ Seguir o homem até as ruínas.
+2️⃣ Investigar a lenda do Sol Negro.
+3️⃣ Ficar na taverna e observar os outros clientes.
+
+O que vocês decidem fazer?
+";
+
     public function __construct(string $apiKey, string $endpoint) {
         $this->apiKey = $apiKey;
         $this->endpoint = $endpoint;
     }
 
+    // 🧩 Reinicia a aventura
+    public function resetHistory(): void {
+        $this->history = [];
+    }
+
+    // 🚀 Inicia automaticamente com o prompt de introdução
+    public function startAdventure(): string {
+        $this->resetHistory();
+        $this->history[] = "Mestre: " . trim($this->introMessage);
+        return trim($this->introMessage);
+    }
+
     public function sendMessage(string $message): string {
-        // Modo local (sem API Key configurada)
         if (empty($this->apiKey)) {
-            return "(Modo local) Você disse: \"$message\". Aqui seria a resposta do modelo Gemini.";
+            return "(Modo local) [Mestre de RPG] \"$message\" — resposta simulada.";
         }
 
         $url = rtrim($this->endpoint, '/') . '?key=' . urlencode($this->apiKey);
+
+        $this->history[] = "Jogador: $message";
+        $fullContext = $this->rpgPrompt . "\n\n" . implode("\n", $this->history);
 
         $payload = [
             'contents' => [
                 [
                     'parts' => [
-                        ['text' => $message]
+                        ['text' => $fullContext]
                     ]
                 ]
             ]
@@ -41,35 +82,16 @@ class GeminiClient {
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        // Falha de rede ou erro de cURL
-        if ($error) {
-            throw new Exception("Erro na requisição cURL: $error");
-        }
-
-        // Verifica se a resposta é válida
+        if ($error) throw new Exception("Erro cURL: $error");
         $data = json_decode($response, true);
 
-        // Loga resposta crua se houver problema de JSON
-        if ($data === null) {
-            file_put_contents(__DIR__ . '/debug_gemini.log', "Resposta inválida da API:\n$response\n");
-            throw new Exception("A API retornou uma resposta inválida (não é JSON). Veja 'debug_gemini.log'.");
-        }
-
-        // Tratamento de erro da API Gemini
-        if (isset($data['error'])) {
-            $msg = $data['error']['message'] ?? 'Erro desconhecido da API Gemini.';
-            $code = $data['error']['code'] ?? $httpCode;
-            file_put_contents(__DIR__ . '/debug_gemini.log', "Erro da API ($code): $msg\nResposta:\n$response\n");
-            throw new Exception("Erro da API Gemini ($code): $msg");
-        }
-
-        // Verifica se o conteúdo esperado existe
         if (!isset($data['candidates'][0]['content']['parts'][0]['text'])) {
-            file_put_contents(__DIR__ . '/debug_gemini.log', "Resposta inesperada:\n$response\n");
-            throw new Exception("Resposta inesperada da API Gemini. Veja 'debug_gemini.log'.");
+            throw new Exception("Resposta inesperada da API Gemini.");
         }
 
-        // Retorna texto gerado
-        return $data['candidates'][0]['content']['parts'][0]['text'];
+        $reply = $data['candidates'][0]['content']['parts'][0]['text'];
+        $this->history[] = "Mestre: $reply";
+
+        return $reply;
     }
 }
