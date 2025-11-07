@@ -18,11 +18,11 @@ O jogador interage com a IA em tempo real, que narra aventuras, descreve cenári
 ## 🗂️ Estrutura do Projeto
 
 ```
-📁 seu-projeto/
+📁 Campanha Automática/
 │
 ├── GeminiClient.php       # Classe principal de conexão com a API Gemini
-├── start_campaign.php     # Inicia a sessão e define o prompt inicial
-├── chat_handler.php       # Envia mensagens do jogador e retorna respostas da IA
+├── start.php              # Inicia a sessão e define o prompt inicial
+├── send.php               # Envia mensagens do jogador e retorna respostas da IA
 ├── config.php             # Contém a API Key e endpoint
 ├── index.html             # Interface do jogador (frontend)
 └── README.md              # Este arquivo 😄
@@ -34,7 +34,7 @@ O jogador interage com a IA em tempo real, que narra aventuras, descreve cenári
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/seuusuario/mestre-rpg.git
+git clone --branch producao --single-branch https://github.com/Alisson-Barbosa/Projeto-GIlmar---Sexta.git
 cd mestre-rpg
 ```
 
@@ -116,9 +116,13 @@ http://localhost:8000
 
 ---
 
-## 🧝‍♀️ Autor
+## 🧝‍♀️ Colaboradores
 
-**Enrico Pontes**  
+**Enrico de Almeida** 
+**Kawa Kinoshita**
+**Alisson Barbosa**
+**Leandro Henrique**
+**Matheus Luz**
 Projeto de estudo e experimentação com IA generativa para RPG narrativo.
 
 ---
