@@ -119,11 +119,11 @@ http://localhost:8000
 ## 🧝‍♀️ Colaboradores
 
 **Enrico de Almeida** 
-**Kawa Kinoshita**
-**Alisson Barbosa**
-**Leandro Henrique**
-**Matheus Luz**
-Projeto de estudo e experimentação com IA generativa para RPG narrativo.
+// **Kawa Kinoshita**
+// **Alisson Barbosa**
+// **Leandro Henrique**
+// **Matheus Luz**
+
 
 ---
 
