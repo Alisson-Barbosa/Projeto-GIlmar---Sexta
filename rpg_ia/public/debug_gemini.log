@@ -1,0 +1,10 @@
+Erro da API (400): Please use a valid role: user, model.
+Resposta:
+{
+  "error": {
+    "code": 400,
+    "message": "Please use a valid role: user, model.",
+    "status": "INVALID_ARGUMENT"
+  }
+}
+
